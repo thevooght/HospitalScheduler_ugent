@@ -7,7 +7,7 @@ package the.avengers.hospitalscheduler.scans;
 
 /**
  *
- * @author user
+ * @author Tony Stark
  */
 public enum ScanEnum {
     NORMAL,

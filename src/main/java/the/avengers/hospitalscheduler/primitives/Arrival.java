@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package the.avengers.hospitalscheduler;
+package the.avengers.hospitalscheduler.primitives;
 
 import java.time.Duration;
 import java.time.Instant;
 
 /**
  *
- * @author user
+ * @author Tony Stark
  */
 public class Arrival extends Patient {
 

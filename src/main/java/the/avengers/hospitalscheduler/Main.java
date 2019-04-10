@@ -7,7 +7,7 @@ package the.avengers.hospitalscheduler;
 
 /**
  *
- * @author The Avengers
+ * @author Tony Stark
  */
 public class Main {
 

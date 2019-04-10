@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package the.avengers.hospitalscheduler;
+package the.avengers.hospitalscheduler.primitives;
 
 /**
  *
- * @author user
+ * @author Tony Stark
  */
 public class Schedule {
 
+    /**
+     * The time slots are an array of arrivals.
+     */
+    public ScheduleTimeSlot[] timeSlots;
 }

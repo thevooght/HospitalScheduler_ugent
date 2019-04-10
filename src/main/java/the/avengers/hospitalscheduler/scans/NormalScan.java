@@ -16,7 +16,7 @@ import java.time.Instant;
  * elective patients. The elective scan duration follows a normal distribution
  * with a mean of 15 minutes and a standard deviation of 3 minutes .
  *
- * @author user
+ * @author Tony Stark
  */
 public class NormalScan extends BaseScan {
 
