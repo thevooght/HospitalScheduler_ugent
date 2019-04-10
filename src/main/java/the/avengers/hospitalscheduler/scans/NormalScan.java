@@ -33,7 +33,7 @@ public class NormalScan extends BaseScan {
         }
 
         // TODO: generate scan time based on mean 15 min and deviation 3 min
-        // Tip: Duration.ofMinutes(16)
+        // Tip: tScanTime = Duration.ofMinutes(16)
         // https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html#ofMinutes-long-
         return tScanTime;
     }
