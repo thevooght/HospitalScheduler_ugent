@@ -26,19 +26,19 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
      * @param arrivals
      */
     public void fill(Schedule s, Arrival[] arrivals) {
+        ScheduleTimeSlot firstSlot = s.timeSlots[0];
+        int k = 2;
         for (int i = 0; i < s.timeSlots.length; i++) {
-            int k = 2;
 
             if (i < k) {
-                // Appointment time of first two arrival is equal to tStart of
-                // the first time slot.
+                // Appointment time of the first two arrivals is equal to tStart
+                // of the first time slot.
                 Arrival arrival = arrivals[i];
-                ScheduleTimeSlot firstSlot = s.timeSlots[0];
                 ScheduleTimeSlot slot = s.timeSlots[i];
-
                 arrival.tAppointment = firstSlot.tStart;
 
-                // TODO: is this a bit problematic, can we really assign patient 2 to the second timeslot?
+                // TODO: is this a bit problematic, can we really assign patient 
+                // 2 to the second timeslot?
                 slot.assignedTo = arrival;
             } else {
                 Arrival arrival = arrivals[i];
@@ -46,7 +46,7 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                 ScheduleTimeSlot previousSlot = s.timeSlots[i - 1];
                 ScheduleTimeSlot slot = s.timeSlots[i];
 
-                /**
+                /** FLORIAN
                  * TODO: I don't quite understand the language here "receive an
                  * appointment time equal to the slot start time of the previous
                  * patient minus the expected scan duration, which is equal to
@@ -57,7 +57,8 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                  * patient has a scan time of 15 minutes, which coincides with
                  * the length of a time slot (which is a given = 15 minutes)
                  *
-                 * This will result in 3 people arriving at t = 0; *************
+                 * "arrival.tAppointment = previousSlot.tStart.minus(previousSlot.duration);"
+                 * This will result in 3 people arriving at t = 0; 
                  * patient 0 appointed to t = 0 (from slot 0) (occupies slot 0)
                  * patient 1 appointed to t = 0 (from slot 0) (occupies slot 1)
                  * patient 2 appointed to t = 0 (slot 1 - dur)(occupies slot 2)
@@ -65,8 +66,18 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                  *
                  * I don't know if this is the correct logic!
                  */
-                arrival.tAppointment = previousSlot.tStart.minus(previousSlot.duration);
+                               
+                /** JEF
+                * This will result in following arriving pattern; 
+                 * patient 0 appointed to t = 0 (from slot 0) (occupies slot 0)
+                 * patient 1 appointed to t = 0 (from slot 0) (occupies slot 1)
+                 * patient 2 appointed to t = 2 (slot 1 + dur)(occupies slot 2)
+                 * patient 3 appointed to t = 3 (slot 2 + dur)(occupies slot 3)
+                 */
+                arrival.tAppointment = previousSlot.tStart.plus(previousSlot.duration);
                 slot.assignedTo = arrival;
+                
+                // ASK ON FEEDBACK SESSION
             }
         }
     }
