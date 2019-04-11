@@ -7,12 +7,13 @@ package the.avengers.hospitalscheduler.scans;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Random;
 
 /**
  * NORMAL PATIENTS
  *
  * No significant differences between the distributions of different scan types.
- * Consequently, only one scan duration distribution w as estimated for all
+ * Consequently, only one scan duration distribution was estimated for all
  * elective patients. The elective scan duration follows a normal distribution
  * with a mean of 15 minutes and a standard deviation of 3 minutes .
  *
@@ -32,9 +33,13 @@ public class NormalScan extends BaseScan {
             return tScanTime;
         }
 
-        // TODO: generate scan time based on mean 15 min and deviation 3 min
-        // Tip: tScanTime = Duration.ofMinutes(16)
-        // https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html#ofMinutes-long-
-        return tScanTime;
+        // Generate scan time based on mean 15 min and deviation 3 min
+        else {
+            Random r = new Random();
+            long ScanTime = (long) (r.nextGaussian()*3 + 15);
+            tScanTime = Duration.ofMinutes(ScanTime);
+            return tScanTime;  
+        }
+        
     }
 }

@@ -19,7 +19,7 @@ public abstract class BaseScan {
 
     /**
      * The department data logs showed that for urgent patients there are
-     * significant differences bet ween the distributions of the scan durations
+     * significant differences between the distributions of the scan durations
      * between different scan types due to setup times.
      *
      */
