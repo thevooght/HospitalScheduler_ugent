@@ -5,6 +5,8 @@
  */
 package the.avengers.hospitalscheduler.primitives;
 
+import the.avengers.hospitalscheduler.scans.ScanEnum;
+
 /**
  *
  * @author Tony Stark
@@ -16,5 +18,6 @@ public class Patient {
      * department without having an appointment.
      */
     public boolean urgent = false;
+    public ScanEnum requiredScan;
 
 }
