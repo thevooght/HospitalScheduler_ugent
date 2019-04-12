@@ -12,31 +12,23 @@ import java.util.Random;
 /**
  * URGENT PATIENTS
  *
- * There are significant differences between the distributions of the scan 
- * durations between different scan types due to setup times.	
- * The spine cervical vertebra scan duration follows a normal distribution 
- * with a mean of 22.5 minutes and a standard deviation of 2.5 minutes.	
+ * There are significant differences between the distributions of the scan
+ * durations between different scan types due to setup times. The spine cervical
+ * vertebra scan duration follows a normal distribution with a mean of 22.5
+ * minutes and a standard deviation of 2.5 minutes.
  *
  * @author Tony Stark
  */
-
 public class SpineCervicalVertebraScan extends BaseScan {
-    
-    public ScanEnum type = ScanEnum.SPINE_CERVICAL_VERTEBRA;
-    private Duration tScanTime;
 
-    public Duration getScanTime() {
-        if (tScanTime != null) {
-            return tScanTime;
-        }
-        // Generate scan time based on mean 22.5 min and deviation 2.5 min
-        else {
-            Random r = new Random();
-            long ScanTime = (long) (r.nextGaussian()*2.5 + 22.5);
-            tScanTime = Duration.ofMinutes(ScanTime);
-            return tScanTime;  
-        }
-        
+    public SpineCervicalVertebraScan() {
+        super();
+
+        this.type = ScanEnum.SPINE_CERVICAL_VERTEBRA;
+
+        Random r = new Random();
+        long ScanTime = (long) (r.nextGaussian() * 2.5 + 22.5);
+        this.tScanTime = Duration.ofMinutes(ScanTime);
     }
-    
+
 }

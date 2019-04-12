@@ -63,4 +63,8 @@ public class Arrival extends Patient {
     public Duration tScanWaitingTime() {
         return Duration.between(tScan, tArrival);
     }
+
+    public Arrival(boolean urgent) {
+        super(urgent);
+    }
 }

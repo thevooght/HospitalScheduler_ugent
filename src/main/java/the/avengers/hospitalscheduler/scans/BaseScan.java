@@ -24,7 +24,11 @@ public abstract class BaseScan {
      *
      */
     public ScanEnum type;
-    private Duration tScanTime;
 
-    abstract Duration getScanTime();
+    /**
+     * If we had already randomly picked a scan time before, then return it
+     * again to maintain consistency. Every patient will still have a randomized
+     * scan time, but once determined it will not change anymore.
+     */
+    public Duration tScanTime;
 }
