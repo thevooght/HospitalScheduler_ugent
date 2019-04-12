@@ -15,6 +15,7 @@ import the.avengers.hospitalscheduler.primitives.Arrival;
  */
 public class ScheduleTimeSlot {
 
+    public TimeSlotEnum type = TimeSlotEnum.NORMAL;
     public boolean reservedForUrgent = false;
 
     // When does the time slot start and how long should it be.
