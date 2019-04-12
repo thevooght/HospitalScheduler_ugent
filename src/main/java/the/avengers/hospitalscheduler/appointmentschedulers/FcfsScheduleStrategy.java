@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package the.avengers.hospitalscheduler.schedulers;
+package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
 import the.avengers.hospitalscheduler.primitives.Schedule;
@@ -19,11 +19,16 @@ public class FcfsScheduleStrategy extends BaseScheduleStrategy {
      * The appointment time is equal to the start time of the assigned time
      * slot.
      *
-     * @param s
-     * @param arrivals
+     * @param s schedule to fill in.
+     * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
     public void fill(Schedule s, Arrival[] arrivals) {
-        for (int i = 0; i < s.timeSlots.length; i++) { 
+        for (int i = 0; i < s.timeSlots.length; i++) {
+            // Not enough arrivals to fill all the timeslots, stop. 
+            if (arrivals.length <= i) {
+                break;
+            }
+
             ScheduleTimeSlot slot = s.timeSlots[i];
             Arrival arrival = arrivals[i];
 

@@ -5,14 +5,19 @@
  */
 package the.avengers.hospitalscheduler.primitives;
 
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+
 /**
+ * The Schedule is created for every day.
  *
  * @author Tony Stark
  */
 public class Schedule {
 
-    /**
-     * The time slots are an array of arrivals.
-     */
     public ScheduleTimeSlot[] timeSlots;
+
 }

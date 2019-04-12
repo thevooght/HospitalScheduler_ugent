@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package the.avengers.hospitalscheduler.schedulers;
+package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
 import the.avengers.hospitalscheduler.primitives.Schedule;
