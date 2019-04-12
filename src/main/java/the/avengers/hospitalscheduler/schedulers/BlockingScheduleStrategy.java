@@ -26,16 +26,15 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
      * @param arrivals
      */
     public void fill(Schedule s, Arrival[] arrivals) {
-        // TODO: alter the code so we can assume a different number of slots 
-        // per block.
+        int B = 2; // Number of slots per block
         for (int i = 1; i < s.timeSlots.length + 1; i++) {
             Arrival arrival = arrivals[i - 1];
             ScheduleTimeSlot slot = s.timeSlots[i - 1];
-            
-            // Check if i is an even number. If so, we know that we are at 
+          
+            // Check if i is a multiple of B (2). If so, we know that we are at 
             // the second slot of a block.
-            if ((i % 2) == 0) {
-                ScheduleTimeSlot previousSlot = s.timeSlots[i - 2];
+            if ((i % B) == 0) {
+                ScheduleTimeSlot previousSlot = s.timeSlots[i - B];
                 arrival.tAppointment = previousSlot.tStart;
             } else {
                 arrival.tAppointment = slot.tStart;

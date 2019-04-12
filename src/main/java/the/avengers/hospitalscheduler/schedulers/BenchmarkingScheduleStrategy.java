@@ -30,7 +30,7 @@ public class BenchmarkingScheduleStrategy extends BaseScheduleStrategy {
     public void fill(Schedule s, Arrival[] arrivals) {
         double k = 0.5;
         double sigma = 3;
-        long kxsigma = (long) (k * sigma);
+        long kxsigma = Math.round(k * sigma);
         Duration timeEarlier = Duration.ofMinutes(kxsigma);
         for (int i = 0; i < s.timeSlots.length; i++) { 
             ScheduleTimeSlot slot = s.timeSlots[i];
