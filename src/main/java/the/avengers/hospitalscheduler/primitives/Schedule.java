@@ -12,7 +12,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
 /**
- * The Schedule is created for every day.
+ * Schedule is created for every day and contains the available time slots.
  *
  * @author Tony Stark
  */

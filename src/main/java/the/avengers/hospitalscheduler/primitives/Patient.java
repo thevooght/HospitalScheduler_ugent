@@ -5,9 +5,11 @@
  */
 package the.avengers.hospitalscheduler.primitives;
 
-import the.avengers.hospitalscheduler.scans.ScanEnum;
+import the.avengers.hospitalscheduler.scans.BaseScan;
+import the.avengers.hospitalscheduler.scans.NormalScan;
 
 /**
+ * Patient class contains all the medical information.
  *
  * @author Tony Stark
  */
@@ -18,6 +20,6 @@ public class Patient {
      * department without having an appointment.
      */
     public boolean urgent = false;
-    public ScanEnum requiredScan;
+    public BaseScan scan = new NormalScan();
 
 }

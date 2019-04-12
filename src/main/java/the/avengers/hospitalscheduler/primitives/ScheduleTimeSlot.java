@@ -10,6 +10,8 @@ import java.time.Instant;
 import the.avengers.hospitalscheduler.primitives.Arrival;
 
 /**
+ * A time slot has a starting timestamp, a duration and can either be reserved
+ * for urgencies, or assigned to an elective patient/arrival.
  *
  * @author TonyStark
  */

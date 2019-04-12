@@ -9,6 +9,13 @@ import java.time.Duration;
 import java.time.Instant;
 
 /**
+ * An Arrival is any type of patient that has visited the hospital.
+ *
+ * Arrival class contains all the information of their visit (timestamps).
+ *
+ * Tip: Use the Arrival class instead of the Patient class everywhere in the
+ * code because they it contains all the juicy data required for the simulation
+ * and performance evaluation.
  *
  * @author Tony Stark
  */

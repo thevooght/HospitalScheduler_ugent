@@ -9,8 +9,8 @@ import the.avengers.hospitalscheduler.primitives.Arrival;
 import the.avengers.hospitalscheduler.primitives.Schedule;
 
 /**
- * The ABSTRACT base class for the schedule strategy is to be extended for the 4
- * different stategies.
+ * The abstract base class for the appointment time schedulers for elective
+ * patients is to be extended for the 4 different strategies.
  *
  * - FCFS. - Bailey-Welch rule. - Blocking rule. - Benchmarking rule
  *

@@ -12,6 +12,8 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
 /**
+ * A Week is a collection of daily schedules with the appropriate available time
+ * slots.
  *
  * @author user
  */

@@ -64,20 +64,22 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                  *
                  * "arrival.tAppointment =
                  * previousSlot.tStart.minus(previousSlot.duration);" This will
-                 * result in 3 people arriving at t = 0; patient 0 appointed to
-                 * t = 0 (from slot 0) (occupies slot 0) patient 1 appointed to
-                 * t = 0 (from slot 0) (occupies slot 1) patient 2 appointed to
-                 * t = 0 (slot 1 - dur)(occupies slot 2) patient 3 appointed to
-                 * t = 1 (slot 2 - dur)(occupies slot 3)
+                 * result in 3 people arriving at t = 0;
+                 *
+                 * patient 0 appointed to t = 0 (from slot 0) (occupies slot 0)
+                 * patient 1 appointed to t = 0 (from slot 0) (occupies slot 1)
+                 * patient 2 appointed to t = 0 (slot 1 - dur)(occupies slot 2)
+                 * patient 3 appointed to t = 1 (slot 2 - dur)(occupies slot 3)
                  *
                  * I don't know if this is the correct logic!
                  */
                 /**
-                 * JEF This will result in following arriving pattern; patient 0
-                 * appointed to t = 0 (from slot 0) (occupies slot 0) patient 1
-                 * appointed to t = 0 (from slot 0) (occupies slot 1) patient 2
-                 * appointed to t = 2 (slot 1 + dur)(occupies slot 2) patient 3
-                 * appointed to t = 3 (slot 2 + dur)(occupies slot 3)
+                 * JEF This will result in following arriving pattern;
+                 *
+                 * patient 0 appointed to t = 0 (from slot 0) (occupies slot 0)
+                 * patient 1 appointed to t = 0 (from slot 0) (occupies slot 1)
+                 * patient 2 appointed to t = 2 (slot 1 + dur)(occupies slot 2)
+                 * patient 3 appointed to t = 3 (slot 2 + dur)(occupies slot 3)
                  */
                 arrival.tAppointment = previousSlot.tStart.plus(previousSlot.duration);
                 slot.assignedTo = arrival;
