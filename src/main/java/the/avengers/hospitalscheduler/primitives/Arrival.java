@@ -7,6 +7,7 @@ package the.avengers.hospitalscheduler.primitives;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Comparator;
 
 /**
  * An Arrival is any type of patient that has visited the hospital.
@@ -62,6 +63,36 @@ public class Arrival extends Patient {
      */
     public Duration tScanWaitingTime() {
         return Duration.between(this.tArrival, this.tScan);
+    }
+
+    /**
+     * We need to sort the randomly generated Arrivals by their phone call to
+     * make the appointment schedulers algorithms easier.
+     *
+     * @return comparator used in the scheduling rules.
+     */
+    public static Comparator<Arrival> compareByPhoneCall() {
+        return new Comparator<Arrival>() {
+            @Override
+            public int compare(Arrival o1, Arrival o2) {
+                return o1.tPhoneCall.compareTo(o2.tPhoneCall);
+            }
+        };
+    }
+
+    /**
+     * We need to sort the randomly generated Arrivals by their phone call to
+     * make the simulation & overtime calculations easier.
+     *
+     * @return comparator used in the scheduling rules.
+     */
+    public static Comparator<Arrival> compareByArrival() {
+        return new Comparator<Arrival>() {
+            @Override
+            public int compare(Arrival o1, Arrival o2) {
+                return o1.tArrival.compareTo(o2.tArrival);
+            }
+        };
     }
 
     public Arrival(boolean urgent) {
