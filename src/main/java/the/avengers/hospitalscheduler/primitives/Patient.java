@@ -7,6 +7,7 @@ package the.avengers.hospitalscheduler.primitives;
 
 import java.util.Random;
 import the.avengers.hospitalscheduler.scans.*;
+import the.avengers.hospitalscheduler.utils.RandomNameGenerator;
 
 /**
  * Patient class contains all the medical information.
@@ -20,6 +21,7 @@ public class Patient {
      * department without having an appointment.
      */
     public boolean urgent = false;
+    public String name = RandomNameGenerator.generate();
     public BaseScan scan = new NormalScan();
 
     public Patient(boolean urgent) {
@@ -41,6 +43,10 @@ public class Patient {
 
             this.urgent = true;
         }
+    }
+
+    public String toString() {
+        return "[ " + name + ": urgent=" + this.urgent + " scan=" + this.scan.type + " ]";
     }
 
 }

@@ -24,7 +24,7 @@ public class TimeSlot {
     public Duration duration = Duration.ofMinutes(15);
 
     public Instant tEnd() {
-        return tStart.plus(this.duration);
+        return this.tStart.plus(this.duration);
     }
 
     // The AppointmentScheduleStrategy class will assign an Arrival/Patient to the timeslot.

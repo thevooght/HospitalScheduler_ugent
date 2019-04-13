@@ -70,4 +70,5 @@ public class ArrivalFactory {
         long tardiness = (long) ((r.nextGaussian() * 2.5) * 60);
         return Duration.ofSeconds(tardiness);
     }
+
 }
