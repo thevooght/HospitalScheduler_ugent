@@ -20,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 public class Week {
 
     /**
-     * Every day gets its own daily schedule with timeslots.
+     * Every day gets its own daily schedule with time slots.
      */
     public Day[] days = new Day[6];
 
@@ -35,40 +35,7 @@ public class Week {
     }
 
     private void addDay(DayOfWeek day) {
-        Day s = new Day();
-        this.days[day.getValue() - 1] = s;
-        this.addSlots(day);
+        this.days[day.getValue() - 1] = new Day(day);
     }
 
-    private void addSlots(DayOfWeek day) {
-
-        // Only open for half a day on Thursday and Saturday (16 slots) else 32.
-        int iSlots = (day.equals(DayOfWeek.THURSDAY) || day.equals(DayOfWeek.SATURDAY)) ? 16 : 32;
-        TimeSlot[] slots = new TimeSlot[iSlots];
-
-        for (int i = 0; i < slots.length; i++) {
-            slots[i] = new TimeSlot();
-            // System.out.println("Setting tStart of slot i=" + i + " max=" + slots.length + " slot[i] == null? " + (slots[i] == null));
-            slots[i].tStart = this.calculateStartOfSlot(day, i, slots[i].duration);
-        }
-        this.days[day.getValue() - 1].timeSlots = slots;
-    }
-
-    private Instant calculateStartOfSlot(DayOfWeek day, int slotIndex, Duration duration) {
-        // We pick an initial point in time, in this case we picked the 8th of April 2019
-        // because it's a monday. If we need the start time of a Tuesday, then we just add 1 day to it.
-        // Same logic for the hour & minute timestamp.
-        Instant tStart = Instant
-                .parse("2019-04-08T08:00:00.00Z")
-                .plus(day.getValue() - 1, ChronoUnit.DAYS)
-                .plus(duration.multipliedBy((long) slotIndex));
-
-        // We need to "skip" the time occupied by the lunch break.
-        // Add the lunchbreak time to all tStart's after the lunchbreak.
-        if (tStart.atZone(ZoneOffset.UTC).getHour() >= 12) {
-            tStart = tStart.plus(1, ChronoUnit.HOURS);
-        }
-
-        return tStart;
-    }
 }
