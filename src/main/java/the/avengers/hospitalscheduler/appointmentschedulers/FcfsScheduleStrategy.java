@@ -6,8 +6,8 @@
 package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
-import the.avengers.hospitalscheduler.primitives.Schedule;
-import the.avengers.hospitalscheduler.primitives.ScheduleTimeSlot;
+import the.avengers.hospitalscheduler.primitives.Day;
+import the.avengers.hospitalscheduler.primitives.TimeSlot;
 
 /**
  *
@@ -22,14 +22,14 @@ public class FcfsScheduleStrategy extends BaseScheduleStrategy {
      * @param s schedule to fill in.
      * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
-    public void fill(Schedule s, Arrival[] arrivals) {
+    public void fill(Day s, Arrival[] arrivals) {
         for (int i = 0; i < s.timeSlots.length; i++) {
             // Not enough arrivals to fill all the timeslots, stop. 
             if (arrivals.length <= i) {
                 break;
             }
 
-            ScheduleTimeSlot slot = s.timeSlots[i];
+            TimeSlot slot = s.timeSlots[i];
             Arrival arrival = arrivals[i];
 
             // Set the arrivals appointment time to the start time of the slot

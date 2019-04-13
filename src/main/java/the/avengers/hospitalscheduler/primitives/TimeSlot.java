@@ -15,13 +15,17 @@ import the.avengers.hospitalscheduler.primitives.Arrival;
  *
  * @author TonyStark
  */
-public class ScheduleTimeSlot {
+public class TimeSlot {
 
     public boolean reservedForUrgent = false;
 
     // tStart contains day & time!
     public Instant tStart;
     public Duration duration = Duration.ofMinutes(15);
+
+    public Instant tEnd() {
+        return tStart.plus(this.duration);
+    }
 
     // The AppointmentScheduleStrategy class will assign an Arrival/Patient to the timeslot.
     public Arrival assignedTo;

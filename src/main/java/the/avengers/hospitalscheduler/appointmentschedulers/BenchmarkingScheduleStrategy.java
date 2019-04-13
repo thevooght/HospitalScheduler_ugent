@@ -7,8 +7,8 @@ package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import java.time.Duration;
 import the.avengers.hospitalscheduler.primitives.Arrival;
-import the.avengers.hospitalscheduler.primitives.Schedule;
-import the.avengers.hospitalscheduler.primitives.ScheduleTimeSlot;
+import the.avengers.hospitalscheduler.primitives.Day;
+import the.avengers.hospitalscheduler.primitives.TimeSlot;
 
 /**
  *
@@ -27,7 +27,7 @@ public class BenchmarkingScheduleStrategy extends BaseScheduleStrategy {
      * @param s schedule to fill in.
      * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
-    public void fill(Schedule s, Arrival[] arrivals) {
+    public void fill(Day s, Arrival[] arrivals) {
         double k = 0.5;
         double sigma = 3;
         long kxsigma = Math.round(k * sigma);
@@ -39,7 +39,7 @@ public class BenchmarkingScheduleStrategy extends BaseScheduleStrategy {
                 break;
             }
 
-            ScheduleTimeSlot slot = s.timeSlots[i];
+            TimeSlot slot = s.timeSlots[i];
             Arrival arrival = arrivals[i];
 
             arrival.tAppointment = slot.tStart.minus(timeEarlier);

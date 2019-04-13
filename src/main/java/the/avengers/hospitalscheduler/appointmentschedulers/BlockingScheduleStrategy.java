@@ -6,8 +6,8 @@
 package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
-import the.avengers.hospitalscheduler.primitives.Schedule;
-import the.avengers.hospitalscheduler.primitives.ScheduleTimeSlot;
+import the.avengers.hospitalscheduler.primitives.Day;
+import the.avengers.hospitalscheduler.primitives.TimeSlot;
 
 /**
  *
@@ -25,7 +25,7 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
      * @param s schedule to fill in.
      * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
-    public void fill(Schedule s, Arrival[] arrivals) {
+    public void fill(Day s, Arrival[] arrivals) {
         int B = 2; // Number of slots per block
 
         for (int i = 1; i < s.timeSlots.length + 1; i++) {
@@ -35,12 +35,12 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
             }
 
             Arrival arrival = arrivals[i - 1];
-            ScheduleTimeSlot slot = s.timeSlots[i - 1];
+            TimeSlot slot = s.timeSlots[i - 1];
 
             // Check if i is a multiple of B (2). If so, we know that we are at 
             // the second slot of a block.
             if ((i % B) == 0) {
-                ScheduleTimeSlot previousSlot = s.timeSlots[i - B];
+                TimeSlot previousSlot = s.timeSlots[i - B];
                 arrival.tAppointment = previousSlot.tStart;
             } else {
                 arrival.tAppointment = slot.tStart;

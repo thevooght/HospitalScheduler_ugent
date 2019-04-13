@@ -6,8 +6,8 @@
 package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
-import the.avengers.hospitalscheduler.primitives.Schedule;
-import the.avengers.hospitalscheduler.primitives.ScheduleTimeSlot;
+import the.avengers.hospitalscheduler.primitives.Day;
+import the.avengers.hospitalscheduler.primitives.TimeSlot;
 
 /**
  *
@@ -25,8 +25,8 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
      * @param s schedule to fill in.
      * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
-    public void fill(Schedule s, Arrival[] arrivals) {
-        ScheduleTimeSlot firstSlot = s.timeSlots[0];
+    public void fill(Day s, Arrival[] arrivals) {
+        TimeSlot firstSlot = s.timeSlots[0];
         int k = 2;
 
         for (int i = 0; i < s.timeSlots.length; i++) {
@@ -40,7 +40,7 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
             if (i < k) {
                 // Appointment time of the first two arrivals is equal to tStart
                 // of the first time slot.
-                ScheduleTimeSlot slot = s.timeSlots[i];
+                TimeSlot slot = s.timeSlots[i];
                 arrival.tAppointment = firstSlot.tStart;
 
                 // TODO: is this a bit problematic, can we really assign patient 
@@ -48,8 +48,8 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                 slot.assignedTo = arrival;
             } else {
                 // Previous slot contains the previous patient as well, so we use that.
-                ScheduleTimeSlot previousSlot = s.timeSlots[i - 1];
-                ScheduleTimeSlot slot = s.timeSlots[i];
+                TimeSlot previousSlot = s.timeSlots[i - 1];
+                TimeSlot slot = s.timeSlots[i];
 
                 /**
                  * FLORIAN TODO: I don't quite understand the language here

@@ -50,7 +50,7 @@ public class Arrival extends Patient {
      * @return the duration time
      */
     public Duration tAppointmentWaitingTime() {
-        return Duration.between(tAppointment, tPhoneCall);
+        return Duration.between(this.tPhoneCall, this.tAppointment);
     }
 
     /**
@@ -61,7 +61,7 @@ public class Arrival extends Patient {
      * @return the duration time
      */
     public Duration tScanWaitingTime() {
-        return Duration.between(tScan, tArrival);
+        return Duration.between(this.tArrival, this.tScan);
     }
 
     public Arrival(boolean urgent) {

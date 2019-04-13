@@ -6,7 +6,7 @@
 package the.avengers.hospitalscheduler.appointmentschedulers;
 
 import the.avengers.hospitalscheduler.primitives.Arrival;
-import the.avengers.hospitalscheduler.primitives.Schedule;
+import the.avengers.hospitalscheduler.primitives.Day;
 
 /**
  * The abstract base class for the appointment time schedulers for elective
@@ -18,5 +18,5 @@ import the.avengers.hospitalscheduler.primitives.Schedule;
  */
 public abstract class BaseScheduleStrategy {
 
-    abstract void fill(Schedule s, Arrival[] arrivals);
+    abstract void fill(Day s, Arrival[] arrivals);
 }

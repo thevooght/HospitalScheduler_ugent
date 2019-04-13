@@ -19,7 +19,10 @@ import java.time.temporal.ChronoUnit;
  */
 public class Week {
 
-    public Schedule[] days = new Schedule[6];
+    /**
+     * Every day gets its own daily schedule with timeslots.
+     */
+    public Day[] days = new Day[6];
 
     public Week() {
         this.addDay(DayOfWeek.MONDAY);
@@ -32,7 +35,7 @@ public class Week {
     }
 
     private void addDay(DayOfWeek day) {
-        Schedule s = new Schedule();
+        Day s = new Day();
         this.days[day.getValue() - 1] = s;
         this.addSlots(day);
     }
@@ -41,10 +44,10 @@ public class Week {
 
         // Only open for half a day on Thursday and Saturday (16 slots) else 32.
         int iSlots = (day.equals(DayOfWeek.THURSDAY) || day.equals(DayOfWeek.SATURDAY)) ? 16 : 32;
-        ScheduleTimeSlot[] slots = new ScheduleTimeSlot[iSlots];
+        TimeSlot[] slots = new TimeSlot[iSlots];
 
         for (int i = 0; i < slots.length; i++) {
-            slots[i] = new ScheduleTimeSlot();
+            slots[i] = new TimeSlot();
             // System.out.println("Setting tStart of slot i=" + i + " max=" + slots.length + " slot[i] == null? " + (slots[i] == null));
             slots[i].tStart = this.calculateStartOfSlot(day, i, slots[i].duration);
         }
