@@ -91,13 +91,19 @@ public class ArrivalFactory {
         Instant tEnd = tStart.plus(urgent ? 4 : 9, ChronoUnit.HOURS);
 
         // Get the amount of available minutes between tStart and tEnd.
-        long minutes = Duration.between(tStart, tEnd).toMinutes();
+        long totalMinutes = Duration.between(tStart, tEnd).toMinutes();
 
         // Generate a random amount of minutes to add to tStart creating
         // the timestamp following the negative exponential distribution
         Random r = new Random();
-        double p = Math.log(1 - r.nextDouble()) / (-lambda);
-        return tStart.plus(minutes, ChronoUnit.MINUTES);
+        // q = -rate * ln (1 - uniformRandom)
+        // with rate = 1 / lambda
+        double q = Math.log(1 - r.nextDouble()) / (-lambda);
+
+        // q is a random value between [0, 1], multiply the total it.
+        // which results in an amount of minutes to add to the start.
+        long minutesToAdd = (long) (totalMinutes * q);
+        return tStart.plus(minutesToAdd, ChronoUnit.MINUTES);
     }
 
     /**
