@@ -72,7 +72,7 @@ public class Day {
         TimeSlot lastTS = this.timeSlots[this.timeSlots.length - 1];
         Arrival lastArrival = this.arrivals[this.arrivals.length - 1];
 
-        Duration overTime = Duration.between(lastTS.tEnd(), lastArrival.tScan);
+        Duration overTime = Duration.between(lastTS.tEnd(), lastArrival.tScanEnd());
         if (overTime.isNegative()) {
             return Duration.ZERO;
         } else {

@@ -43,6 +43,10 @@ public class Arrival extends Patient {
     public Instant tArrival;
     public Instant tScan;
 
+    public Instant tScanEnd() {
+        return this.tScan.plus(this.scan.tScanTime);
+    }
+
     /**
      * The appointment waiting time of an elective patient is the time between
      * their request for an appointment (phone call) and their actual
