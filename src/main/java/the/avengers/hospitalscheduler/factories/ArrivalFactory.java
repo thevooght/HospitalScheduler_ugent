@@ -7,6 +7,8 @@ package the.avengers.hospitalscheduler.factories;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import the.avengers.hospitalscheduler.primitives.Arrival;
 
@@ -22,8 +24,9 @@ public class ArrivalFactory {
 
     public static Arrival[] generate(DayOfWeek day, boolean urgent) {
         // Amount of arrivals
-        // TODO: how many arrivals for urgent patients? 28.345 is for elective.
-        int n = urgent ? getPoissonRandom(28.345) : getPoissonRandom(28.345);
+        boolean halfDay = (day == day.THURSDAY || day == day.SATURDAY);
+        double lambda = urgent ? (halfDay ? 1.25 : 2.5) : 28.345;
+        int n = getPoissonRandom(lambda);
 
         // TODO: what about days where they are half open but desk is always open (monday to friday)?
         // Divide n by two if only half a day? Or use f
@@ -33,17 +36,28 @@ public class ArrivalFactory {
             Arrival arrival = new Arrival(urgent);
             arrivals[i] = arrival;
 
-        }
-        // TODO: chance of 2% that they never show up/arrive
-        // TODO: add tardiness on arrival
-        // arrival.tArrival = arrival.tAppointment.plus(getTardinessRandom());
+            if (arrival.urgent) {
+                arrival.tArrival = getTimeRandom(day, true, lambda);
+            } else {
+                arrival.tPhoneCall = getTimeRandom(day, false, lambda);
+                // TODO: tAppointment is not set yet, so the TODOs below need to be moved.
+                //       tAppointment is only available after a Day has going through an
+                //       appointment scheduler.
+                // TODO: chance of 2% that they never show up/arrive
+                // TODO: add tardiness on arrival
+                // arrival.tArrival = arrival.tAppointment.plus(getTardinessRandom());
+            }
 
+            // TODO: draw a number from 0 to 
+        }
         return arrivals;
     }
 
     /**
      * When fitting the empirical data, we find that the number of elective
-     * arrivals per day follows a Poisson distribution with mean = 28.345 .
+     * arrivals per day follows a Poisson distribution with mean = 28.345.
+     *
+     * How many arrivals/phone calls do we receive on a day?
      */
     private static int getPoissonRandom(double mean) {
         Random r = new Random();
@@ -55,6 +69,35 @@ public class ArrivalFactory {
             k++;
         } while (p > L);
         return k - 1;
+    }
+
+    /**
+     * Given that we have n phone calls/arrivals on a day, how should we spread
+     * them over the day? It follows a negative exponential distribution, which
+     * means more patients will call or arrive in the morning than at the end of
+     * the day.
+     *
+     * @param day for which day should we generate a random time
+     * @param urgent if true generates tArrival instead of tPhoneCall timestamp
+     * @return
+     */
+    private static Instant getTimeRandom(DayOfWeek day, boolean urgent, double lambda) {
+        Instant tStart = Instant
+                .parse("2019-04-08T08:00:00.00Z")
+                .plus(day.getValue() - 1, ChronoUnit.DAYS);
+
+        // Phone calls can be made between 8AM until 5PM (9 hours of time), no lunchbreaks!.
+        // However urgent patients have to respect the opening hours of the outpatient department.
+        Instant tEnd = tStart.plus(urgent ? 4 : 9, ChronoUnit.HOURS);
+
+        // Get the amount of available minutes between tStart and tEnd.
+        long minutes = Duration.between(tStart, tEnd).toMinutes();
+
+        // Generate a random amount of minutes to add to tStart creating
+        // the timestamp following the negative exponential distribution
+        Random r = new Random();
+        double p = Math.log(1 - r.nextDouble()) / (-lambda);
+        return tStart.plus(minutes, ChronoUnit.MINUTES);
     }
 
     /**
