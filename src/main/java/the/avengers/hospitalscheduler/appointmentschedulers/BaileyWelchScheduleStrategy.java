@@ -34,7 +34,7 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
             TimeSlot slot = s.timeSlots[i];
 
             if (slot.reservedForUrgent) {
-                break; // Skip this timeslot
+                continue; // Skip this timeslot
             } else {
                 patient++;
             }

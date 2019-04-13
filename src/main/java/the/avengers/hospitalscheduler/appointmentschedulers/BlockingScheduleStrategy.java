@@ -33,7 +33,7 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
             TimeSlot slot = s.timeSlots[i - 1];
 
             if (slot.reservedForUrgent) {
-                break; // Skip this timeslot
+                continue; // Skip this timeslot
             } else {
                 patient++;
             }
