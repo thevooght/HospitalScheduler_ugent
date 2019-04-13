@@ -32,15 +32,23 @@ public class BenchmarkingScheduleStrategy extends BaseScheduleStrategy {
         double sigma = 3;
         long kxsigma = Math.round(k * sigma);
         Duration timeEarlier = Duration.ofMinutes(kxsigma);
+        int patient = 0;
 
         for (int i = 0; i < s.timeSlots.length; i++) {
-            // Not enough arrivals to fill all the timeslots, stop. 
-            if (arrivals.length <= i) {
+            TimeSlot slot = s.timeSlots[i];
+
+            if (slot.reservedForUrgent) {
+                break; // Skip this timeslot
+            } else {
+                patient++;
+            }
+
+            // Not enough arrivals to fill all the normal timeslots, stop. 
+            if (arrivals.length <= patient) {
                 break;
             }
 
-            TimeSlot slot = s.timeSlots[i];
-            Arrival arrival = arrivals[i];
+            Arrival arrival = arrivals[patient];
 
             arrival.tAppointment = slot.tStart.minus(timeEarlier);
             slot.assignedTo = arrival;

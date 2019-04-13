@@ -23,14 +23,22 @@ public class FcfsScheduleStrategy extends BaseScheduleStrategy {
      * @param arrivals elective arrivals only! (Do not include urgency patients)
      */
     public void fill(Day s, Arrival[] arrivals) {
+        int patient = 0;
         for (int i = 0; i < s.timeSlots.length; i++) {
-            // Not enough arrivals to fill all the timeslots, stop. 
-            if (arrivals.length <= i) {
+            TimeSlot slot = s.timeSlots[i];
+
+            if (slot.reservedForUrgent) {
+                break; // Skip this timeslot
+            } else {
+                patient++;
+            }
+
+            // Not enough arrivals to fill all the normal timeslots, stop. 
+            if (arrivals.length <= patient) {
                 break;
             }
 
-            TimeSlot slot = s.timeSlots[i];
-            Arrival arrival = arrivals[i];
+            Arrival arrival = arrivals[patient];
 
             // Set the arrivals appointment time to the start time of the slot
             // and set the assignedTo field in the slot!

@@ -27,15 +27,23 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
      */
     public void fill(Day s, Arrival[] arrivals) {
         int B = 2; // Number of slots per block
+        int patient = 0;
 
         for (int i = 1; i < s.timeSlots.length + 1; i++) {
-            // Not enough arrivals to fill all the timeslots, stop. 
-            if (arrivals.length <= (i - 1)) {
+            TimeSlot slot = s.timeSlots[i - 1];
+
+            if (slot.reservedForUrgent) {
+                break; // Skip this timeslot
+            } else {
+                patient++;
+            }
+
+            // Not enough arrivals to fill all the normal timeslots, stop. 
+            if (arrivals.length <= patient) {
                 break;
             }
 
-            Arrival arrival = arrivals[i - 1];
-            TimeSlot slot = s.timeSlots[i - 1];
+            Arrival arrival = arrivals[patient];
 
             // Check if i is a multiple of B (2). If so, we know that we are at 
             // the second slot of a block.

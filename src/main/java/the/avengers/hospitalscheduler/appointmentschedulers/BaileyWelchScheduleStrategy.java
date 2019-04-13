@@ -28,19 +28,27 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
     public void fill(Day s, Arrival[] arrivals) {
         TimeSlot firstSlot = s.timeSlots[0];
         int k = 2;
+        int patient = 0;
 
         for (int i = 0; i < s.timeSlots.length; i++) {
-            // Not enough arrivals to fill all the timeslots, stop. 
-            if (arrivals.length <= i) {
+            TimeSlot slot = s.timeSlots[i];
+
+            if (slot.reservedForUrgent) {
+                break; // Skip this timeslot
+            } else {
+                patient++;
+            }
+
+            // Not enough arrivals to fill all the normal timeslots, stop. 
+            if (arrivals.length <= patient) {
                 break;
             }
 
-            Arrival arrival = arrivals[i];
+            Arrival arrival = arrivals[patient];
 
             if (i < k) {
                 // Appointment time of the first two arrivals is equal to tStart
                 // of the first time slot.
-                TimeSlot slot = s.timeSlots[i];
                 arrival.tAppointment = firstSlot.tStart;
 
                 // TODO: is this a bit problematic, can we really assign patient 
@@ -49,7 +57,6 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
             } else {
                 // Previous slot contains the previous patient as well, so we use that.
                 TimeSlot previousSlot = s.timeSlots[i - 1];
-                TimeSlot slot = s.timeSlots[i];
 
                 /**
                  * FLORIAN TODO: I don't quite understand the language here
