@@ -5,7 +5,7 @@
  */
 package the.avengers.hospitalscheduler.simulation;
 
-import the.avengers.hospitalscheduler.primitives.Day;
+import the.avengers.hospitalscheduler.primitives.Week;
 
 /**
  *
@@ -20,7 +20,7 @@ public class MonteCarlo {
      * @param schedule the schedule for which we want to evaluate the
      * performance.
      */
-    public void simulate(int n, Day schedule) {
+    public void simulate(int n, Week schedule) {
         for (int i = 0; i < n; i++) {
             // TODO: use the Arrival Factory to generate a stream of arrivals
 

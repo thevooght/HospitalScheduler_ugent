@@ -52,12 +52,12 @@ public class Analyzer {
      *
      * @param week a filled-in week.
      */
-    public Analyzer(Week week) throws Exception {
+    public Analyzer(Week week) {
 
         for (Day day : week.days) {
-            for (Arrival arrival : day.arrivals) {
-                this.tSumOfOverTime = this.tSumOfOverTime.plus(day.tOverTime());
+            this.tSumOfOverTime = this.tSumOfOverTime.plus(day.tOverTime());
 
+            for (Arrival arrival : day.arrivals) {
                 if (arrival.urgent) {
                     this.tSumOfUrgencyScanWaitingTime = this.tSumOfUrgencyScanWaitingTime.plus(arrival.tScanWaitingTime());
                 } else {

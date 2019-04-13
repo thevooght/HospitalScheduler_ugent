@@ -36,7 +36,7 @@ public class ArrivalFactory {
         }
         // TODO: chance of 2% that they never show up/arrive
         // TODO: add tardiness on arrival
-        // arrival.tArrival.plus(getTardinessRandom());
+        // arrival.tArrival = arrival.tAppointment.plus(getTardinessRandom());
 
         return arrivals;
     }
