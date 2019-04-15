@@ -40,7 +40,19 @@ public class Arrival extends Patient {
      * Technically not in the illustration of the assignment but we have to
      * split up appointment from actual arrival time! Arrivals can be late..
      */
-    public Instant tArrival;
+    public Instant _tArrival;                       // Only set if urgent patient
+    public Duration dTardiness = Duration.ZERO;     // Only set if electrince patient
+
+    public Instant tArrival() {
+        if (this.urgent) {
+            return this._tArrival;
+        } else {
+            // Elective patients are expected at their appointment hour
+            // With some tardiness.
+            return this.tAppointment.plus(this.dTardiness);
+        }
+    }
+
     public Instant tScan;
 
     public Instant tScanEnd() {
@@ -66,7 +78,7 @@ public class Arrival extends Patient {
      * @return the duration time
      */
     public Duration tScanWaitingTime() {
-        return Duration.between(this.tArrival, this.tScan);
+        return Duration.between(this.tArrival(), this.tScan);
     }
 
     /**
@@ -94,7 +106,7 @@ public class Arrival extends Patient {
         return new Comparator<Arrival>() {
             @Override
             public int compare(Arrival o1, Arrival o2) {
-                return o1.tArrival.compareTo(o2.tArrival);
+                return o1.tArrival().compareTo(o2.tArrival());
             }
         };
     }

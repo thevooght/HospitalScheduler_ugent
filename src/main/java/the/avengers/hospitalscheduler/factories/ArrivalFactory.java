@@ -28,27 +28,22 @@ public class ArrivalFactory {
         double lambda = urgent ? (halfDay ? 1.25 : 2.5) : 28.345;
         int n = getPoissonRandom(lambda);
 
-        // TODO: what about days where they are half open but desk is always open (monday to friday)?
-        // Divide n by two if only half a day? Or use f
         Arrival[] arrivals = new Arrival[n];
         for (int i = 0; i < n; i++) {
             // Create new arrival and add it to the list
             Arrival arrival = new Arrival(urgent);
             arrivals[i] = arrival;
 
+            // Urgent patients just arrive without appointment or tardiness.
+            // Elective patients have an appointment and can be late.
             if (arrival.urgent) {
-                arrival.tArrival = getTimeRandom(day, true, lambda);
+                arrival._tArrival = getTimeRandom(day, arrival.urgent, lambda);
             } else {
-                arrival.tPhoneCall = getTimeRandom(day, false, lambda);
-                // TODO: tAppointment is not set yet, so the TODOs below need to be moved.
-                //       tAppointment is only available after a Day has going through an
-                //       appointment scheduler.
+                arrival.tPhoneCall = getTimeRandom(day, arrival.urgent, lambda);
+                arrival.dTardiness = getTardinessRandom();
                 // TODO: chance of 2% that they never show up/arrive
-                // TODO: add tardiness on arrival
-                // arrival.tArrival = arrival.tAppointment.plus(getTardinessRandom());
             }
 
-            // TODO: draw a number from 0 to 
         }
         return arrivals;
     }
@@ -88,7 +83,9 @@ public class ArrivalFactory {
 
         // Phone calls can be made between 8AM until 5PM (9 hours of time), no lunchbreaks!.
         // However urgent patients have to respect the opening hours of the outpatient department.
-        Instant tEnd = tStart.plus(urgent ? 4 : 9, ChronoUnit.HOURS);
+        boolean halfDay = (day == day.THURSDAY || day == day.SATURDAY);
+        int hoursToAdd = 9 - ((urgent && halfDay) ? 5 : 0);
+        Instant tEnd = tStart.plus(hoursToAdd, ChronoUnit.HOURS);
 
         // Get the amount of available minutes between tStart and tEnd.
         long totalMinutes = Duration.between(tStart, tEnd).toMinutes();
