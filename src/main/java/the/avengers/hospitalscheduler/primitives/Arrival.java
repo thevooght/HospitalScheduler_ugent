@@ -97,7 +97,7 @@ public class Arrival extends Patient {
     }
 
     /**
-     * We need to sort the randomly generated Arrivals by their phone call to
+     * We need to sort the randomly generated Arrivals by their arrival time to
      * make the simulation & overtime calculations easier.
      *
      * @return comparator used in the scheduling rules.

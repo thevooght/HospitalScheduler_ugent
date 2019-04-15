@@ -5,6 +5,7 @@
  */
 package the.avengers.hospitalscheduler.appointmentschedulers;
 
+import java.util.Arrays;
 import the.avengers.hospitalscheduler.primitives.Arrival;
 import the.avengers.hospitalscheduler.primitives.Day;
 import the.avengers.hospitalscheduler.primitives.TimeSlot;
@@ -24,19 +25,19 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
      *
      * @param s schedule to fill in.
      * @param arrivals elective arrivals only! (Do not include urgency patients)
+     * @return
      */
-    public void fill(Day s, Arrival[] arrivals) {
+    public Arrival[] fill(Day s, Arrival[] arrivals) {
         TimeSlot firstSlot = s.timeSlots[0];
         int k = 2;
         int patient = 0;
+        Arrival[] unassignedArrivals = {};
 
         for (int i = 0; i < s.timeSlots.length; i++) {
             TimeSlot slot = s.timeSlots[i];
 
             if (slot.reservedForUrgent) {
                 continue; // Skip this timeslot
-            } else {
-                patient++;
             }
 
             // Not enough arrivals to fill all the normal timeslots, stop. 
@@ -45,6 +46,11 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
             }
 
             Arrival arrival = arrivals[patient];
+
+            // Only assign patients to slots after tPhoneCall.
+            if (arrival.tPhoneCall.compareTo(slot.tStart) > 0) {
+                continue; // skip this timeslot
+            }
 
             if (i < k) {
                 // Appointment time of the first two arrivals is equal to tStart
@@ -93,6 +99,16 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
 
                 // ASK ON FEEDBACK SESSION
             }
+            // Only move to the next patient, if we're sure it was assigned a slot.
+            patient++;
         }
+
+        // If a patient can't get treated on the same day as their phone call, 
+        // they should be carried over to the next day.
+        if (arrivals.length > patient) {
+            unassignedArrivals = Arrays.copyOfRange(arrivals, patient, arrivals.length);
+        }
+
+        return unassignedArrivals;
     }
 }

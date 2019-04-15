@@ -27,7 +27,7 @@ public class SpineLumbarVertebraScan extends BaseScan {
         this.type = ScanEnum.SPINE_LUMBAR_VERTEBRA;
 
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 1 + 17.5);
+        long ScanTime = Math.round(r.nextGaussian() * 1 + 17.5);
         this.tScanTime = Duration.ofMinutes(ScanTime);
     }
 }

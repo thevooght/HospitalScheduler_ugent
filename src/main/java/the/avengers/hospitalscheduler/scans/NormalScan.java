@@ -27,7 +27,7 @@ public class NormalScan extends BaseScan {
         this.type = ScanEnum.NORMAL;
 
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 3 + 15);
+        long ScanTime = Math.round(r.nextGaussian() * 3 + 15);
         this.tScanTime = Duration.ofMinutes(ScanTime);
 
     }

@@ -27,7 +27,7 @@ public class SpineCervicalVertebraScan extends BaseScan {
         this.type = ScanEnum.SPINE_CERVICAL_VERTEBRA;
 
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 2.5 + 22.5);
+        long ScanTime = Math.round(r.nextGaussian() * 2.5 + 22.5);
         this.tScanTime = Duration.ofMinutes(ScanTime);
     }
 

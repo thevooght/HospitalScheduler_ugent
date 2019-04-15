@@ -28,7 +28,7 @@ public class OtherScan extends BaseScan {
 
         // Generate scan time based on mean 30 min and deviation 4.5 min
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 4.5 + 30);
+        long ScanTime = Math.round(r.nextGaussian() * 4.5 + 30);
         this.tScanTime = Duration.ofMinutes(ScanTime);
     }
 

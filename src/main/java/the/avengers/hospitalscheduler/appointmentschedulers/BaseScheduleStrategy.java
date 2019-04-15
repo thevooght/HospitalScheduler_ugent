@@ -18,5 +18,5 @@ import the.avengers.hospitalscheduler.primitives.Day;
  */
 public abstract class BaseScheduleStrategy {
 
-    abstract void fill(Day s, Arrival[] arrivals);
+    abstract Arrival[] fill(Day s, Arrival[] arrivals);
 }

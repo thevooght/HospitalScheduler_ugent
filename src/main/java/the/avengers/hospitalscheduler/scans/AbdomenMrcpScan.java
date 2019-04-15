@@ -27,7 +27,7 @@ public class AbdomenMrcpScan extends BaseScan {
         this.type = ScanEnum.ABDOMEN_MRCP;
 
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 1 + 30);
+        long ScanTime = Math.round(r.nextGaussian() * 1 + 30);
         this.tScanTime = Duration.ofMinutes(ScanTime);
     }
 

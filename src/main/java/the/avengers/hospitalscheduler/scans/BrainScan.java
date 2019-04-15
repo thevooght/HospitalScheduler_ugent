@@ -27,7 +27,7 @@ public class BrainScan extends BaseScan {
         this.type = type = ScanEnum.BRAIN;
 
         Random r = new Random();
-        long ScanTime = (long) (r.nextGaussian() * 2.5 + 15);
+        long ScanTime = Math.round(r.nextGaussian() * 2.5 + 15);
         this.tScanTime = Duration.ofMinutes(ScanTime);
     }
 
