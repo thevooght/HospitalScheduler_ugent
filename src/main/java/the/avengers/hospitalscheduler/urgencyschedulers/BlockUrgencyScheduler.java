@@ -18,12 +18,10 @@ import the.avengers.hospitalscheduler.primitives.Week;
  * @author user
  */
 public class BlockUrgencyScheduler extends BaseUrgencyScheduler {
-
-  public void fill(Week w, int nUrgencySlots) {
-
-        // There are minimum 10 urgent slots
-        if (nUrgencySlots == 10) {
-         for (int i = 0; i < w.days.length; i++) {
+	public void fill(Week w, int nUrgencySlots) {
+    // There are minimum 10 urgent slots
+    if (nUrgencySlots == 10) {
+      for (int i = 0; i < w.days.length; i++) {
             if (w.days[i].day == DayOfWeek.THURSDAY || w.days[i].day == DayOfWeek.SATURDAY) {
                 w.days[i].timeSlots[6].reservedForUrgent = true;
             } else {
