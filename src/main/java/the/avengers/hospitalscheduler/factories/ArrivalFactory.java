@@ -42,7 +42,7 @@ public class ArrivalFactory {
             } else {
                 arrival.tPhoneCall = getTimeRandom(day, arrival.urgent, lambda);
                 arrival.dTardiness = getTardinessRandom();
-                // TODO: chance of 2% that they never show up/arrive
+                arrival.showUp = getShowUp();
             }
 
         }
@@ -128,8 +128,15 @@ public class ArrivalFactory {
      */
     private static Duration getTardinessRandom() {
         Random r = new Random();
-        long tardiness = (long) ((r.nextGaussian() * 2.5) * 60);
+        long tardiness = Math.round((r.nextGaussian() * 2.5) * 60);
         return Duration.ofSeconds(tardiness);
+    }
+    
+    // There is a 2% chance that the elective patient never shows up/arrives.
+    private static boolean getShowUp() {
+        Random r = new Random();
+        boolean showUp = (r.nextInt(50) == 0) ? false : true;
+        return showUp;
     }
 
 }

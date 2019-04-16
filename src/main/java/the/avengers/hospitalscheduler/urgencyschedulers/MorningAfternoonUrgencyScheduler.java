@@ -44,7 +44,7 @@ public class MorningAfternoonUrgencyScheduler extends BaseUrgencyScheduler {
                 if (w.days[dayCounter].day == DayOfWeek.THURSDAY) {
                     dayCounter++; // Skip this day for now
                 }
-                w.days[dayCounter].timeSlots[15].reservedForUrgent = true;
+                w.days[dayCounter].timeSlots[14].reservedForUrgent = true;
                 dayCounter++;
             }
         }
