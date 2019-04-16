@@ -95,6 +95,7 @@ public class BaileyWelchScheduleStrategy extends BaseScheduleStrategy {
                  * patient 3 appointed to t = 3 (slot 2 + dur)(occupies slot 3)
                  */
                 arrival.tAppointment = previousSlot.tStart.plus(previousSlot.duration);
+                arrival.tTimeSlot = slot.tStart;
                 slot.assignedTo = arrival;
 
                 // ASK ON FEEDBACK SESSION

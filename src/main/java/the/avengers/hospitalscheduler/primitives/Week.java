@@ -38,4 +38,12 @@ public class Week {
         this.days[day.getValue() - 1] = new Day(day);
     }
 
+    public boolean isCompleted() {
+        for (Day day : this.days) {
+            if (!day.isCompleted()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

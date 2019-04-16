@@ -60,6 +60,7 @@ public class BlockingScheduleStrategy extends BaseScheduleStrategy {
                 arrival.tAppointment = slot.tStart;
             }
 
+            arrival.tTimeSlot = slot.tStart;
             slot.assignedTo = arrival;
             // Only move to the next patient, if we're sure it was assigned a slot.
             patient++;

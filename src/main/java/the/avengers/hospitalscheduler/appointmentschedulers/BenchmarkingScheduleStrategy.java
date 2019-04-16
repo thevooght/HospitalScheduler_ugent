@@ -57,6 +57,7 @@ public class BenchmarkingScheduleStrategy extends BaseScheduleStrategy {
             }
 
             arrival.tAppointment = slot.tStart.minus(timeEarlier);
+            arrival.tTimeSlot = slot.tStart;
             slot.assignedTo = arrival;
             // Only move to the next patient, if we're sure it was assigned a slot.
             patient++;

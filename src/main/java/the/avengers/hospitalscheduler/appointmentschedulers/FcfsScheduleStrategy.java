@@ -50,6 +50,7 @@ public class FcfsScheduleStrategy extends BaseScheduleStrategy {
             // Set the arrivals appointment time to the start time of the slot
             // and set the assignedTo field in the slot!
             arrival.tAppointment = slot.tStart;
+            arrival.tTimeSlot = slot.tStart;
             slot.assignedTo = arrival;
             // Only move to the next patient, if we're sure it was assigned a slot.
             patient++;

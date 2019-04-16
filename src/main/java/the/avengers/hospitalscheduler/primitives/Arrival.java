@@ -111,6 +111,49 @@ public class Arrival extends Patient {
         };
     }
 
+    /**
+     * We need to sort the randomly generated Arrivals by their completion time
+     * to make the simulation & overtime calculations easier.
+     *
+     * @return comparator used in the scheduling rules.
+     */
+    public static Comparator<Arrival> compareByScanEnd() {
+        return new Comparator<Arrival>() {
+            @Override
+            public int compare(Arrival o1, Arrival o2) {
+                return o1.tScanEnd().compareTo(o2.tScanEnd());
+            }
+        };
+    }
+
+    /**
+     * Returns whether all required fields for the analysis were filled in.
+     */
+    public boolean isCompleted() {
+        if ((!this.urgent && this.tPhoneCall == null)
+                || (!this.urgent && this.tAppointment == null)
+                || (!this.urgent && this.tTimeSlot == null)
+                || (this.urgent && this._tArrival == null)
+                || (this.tScan == null)) {
+            return false;
+        }
+        return true;
+    }
+
+    public String toString() {
+        String s = "[ " + name + ": urgent=" + this.urgent;
+        if (!this.urgent) {
+            s += " called=" + this.tPhoneCall;
+            s += " appointment=" + this.tAppointment;
+            s += " timeslot=" + this.tTimeSlot;
+        } else {
+            s += " tArrival=" + this._tArrival;
+        }
+        s += " scan=" + this.scan.type;
+        s += " ]";
+        return s;
+    }
+
     public Arrival(boolean urgent) {
         super(urgent);
     }

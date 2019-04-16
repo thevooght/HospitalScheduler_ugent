@@ -9,6 +9,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Random;
 import the.avengers.hospitalscheduler.primitives.Arrival;
 
@@ -45,6 +46,14 @@ public class ArrivalFactory {
             }
 
         }
+
+        // Sort the arrays by the time of either the phone call or the arrival.
+        if (urgent) {
+            Arrays.sort(arrivals, Arrival.compareByArrival());
+        } else {
+            Arrays.sort(arrivals, Arrival.compareByPhoneCall());
+        }
+
         return arrivals;
     }
 
@@ -77,12 +86,18 @@ public class ArrivalFactory {
      * @return
      */
     private static Instant getTimeRandom(DayOfWeek day, boolean urgent, double lambda) {
-        Instant tStart = Instant
-                .parse("2019-04-08T08:00:00.00Z")
+        Instant tStart = Instant.parse("2019-04-08T08:00:00.00Z")
                 .plus(day.getValue() - 1, ChronoUnit.DAYS);
-
-        // Phone calls can be made between 8AM until 5PM (9 hours of time), no lunchbreaks!.
-        // However urgent patients have to respect the opening hours of the outpatient department.
+        /**
+         * Phone calls can be made between 8AM until 5PM (9 hours of time), no
+         * lunch breaks!
+         *
+         * However urgent patients have to respect the opening hours of the
+         * outpatient department. Note that urgent patients arriving outside the
+         * opening hours of the outpatient department (e.g.on Thursday afternoon
+         * or at night) should not be considered as they are examined in the
+         * emergency department of the hospital
+         */
         boolean halfDay = (day == day.THURSDAY || day == day.SATURDAY);
         int hoursToAdd = 9 - ((urgent && halfDay) ? 5 : 0);
         Instant tEnd = tStart.plus(hoursToAdd, ChronoUnit.HOURS);
